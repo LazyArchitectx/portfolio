@@ -1,50 +1,73 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="ZEE — Data & ML Engineering" description="Data engineering, MLOps, AI governance.">
-  <h1 class="text-4xl font-bold tracking-tight">Hi, I'm ZEE.</h1>
-  <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Data engineering, MLOps, AI governance.</p>
-  <p>
-        I’m a Data and Machine Learning Engineer focused on backend architecture, site reliability, and making AI systems scale in production.
-      </p>
-      
-      <p>
-        With a background spanning enterprise tech and federal civilian contracting, I approach engineering with a consulting mindset. I don't just write code—I focus on building resilient infrastructure that solves actual business bottlenecks.
-      </p>
+<Base title="Zee — Data & ML Engineering" description="Data and Machine Learning Engineer focused on backend architecture, site reliability, and scaling AI systems in production.">
+  <h1 class="text-4xl font-bold tracking-tight">Data & Machine Learning Engineering</h1>
 
-      <h2>What I do</h2>
-      <ul>
-        <li><strong>Data & Cloud Infrastructure:</strong> Building robust ETL pipelines, managing distributed databases, and automating deployments (Terraform, Kubernetes, Docker).</li>
-        <li><strong>Machine Learning:</strong> Deploying models for autonomous systems, computer vision, and analytics.</li>
-        <li><strong>Consulting:</strong> Advising on system architecture, reliability (SRE), and scaling data operations.</li>
-      </ul>
-  <a href="/projects" class="mt-8 inline-block rounded bg-brand px-4 py-2 text-white">See projects →</a>
-  <div class="contact-section">
-        <h2>📬 Let's Connect</h2>
-        <p>Have an engineering challenge or project in mind? Drop a message below to start a conversation.</p>
-        
-        <form class="contact-form" id="contactForm">
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" name="name" required placeholder="Jane Doe" />
-          </div>
-          
-          <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" id="email" name="email" required placeholder="jane@company.com" />
-          </div>
-          
-          <div class="form-group">
-            <label for="message">Message / Project Details</label>
-            <textarea id="message" name="message" rows="4" required placeholder="Tell me about your project or role..."></textarea>
-          </div>
-          
-          <button type="submit" id="submitBtn">Send Message</button>
-          <div id="form-status"></div>
-        </form>
-        
-        <div class="alt-link">
-          Prefer professional networks? Connect with me directly on <a href="https://www.linkedin.com/in/s1tz/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
-        </div>
-      </div>
+  <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
+    <p>
+      I'm a Data and Machine Learning Engineer focused on backend architecture, site reliability, and making AI systems scale in production.
+    </p>
+    <p>
+      With a background spanning enterprise tech and federal civilian contracting, I approach engineering with a consulting mindset. I don't just write code — I focus on building resilient infrastructure that solves actual business bottlenecks.
+    </p>
+  </div>
+
+  <h2 class="mt-10 text-2xl font-semibold tracking-tight">What I do</h2>
+  <ul class="mt-4 space-y-3 text-gray-600 dark:text-gray-400">
+    <li>
+      <strong class="text-gray-900 dark:text-gray-100">Data &amp; Cloud Infrastructure:</strong>
+      Building robust ETL pipelines, managing distributed databases, and automating deployments (Terraform, Kubernetes, Docker).
+    </li>
+    <li>
+      <strong class="text-gray-900 dark:text-gray-100">Machine Learning:</strong>
+      Deploying models for autonomous systems, computer vision, and analytics.
+    </li>
+    <li>
+      <strong class="text-gray-900 dark:text-gray-100">Consulting:</strong>
+      Advising on system architecture, reliability (SRE), and scaling data operations.
+    </li>
+  </ul>
+
+  <a href="/projects" class="mt-10 inline-block rounded bg-brand px-4 py-2 text-white transition hover:opacity-90">See projects →</a>
 </Base>
+<script>
+      const form = document.getElementById('contactForm') as HTMLFormElement;
+      const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+      const statusDiv = document.getElementById('form-status') as HTMLElement;
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        statusDiv.style.display = 'none';
+
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+
+          statusDiv.style.display = 'block';
+          if (response.ok) {
+            statusDiv.style.color = 'var(--success-color)';
+            statusDiv.textContent = result.message;
+            form.reset();
+          } else {
+            statusDiv.style.color = '#f85149';
+            statusDiv.textContent = result.message || 'Failed to send message.';
+          }
+        } catch (error) {
+          statusDiv.style.display = 'block';
+          statusDiv.style.color = '#f85149';
+          statusDiv.textContent = 'Network error. Please try again later.';
+        } finally {
+          submitBtn.textContent = 'Send Message';
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
