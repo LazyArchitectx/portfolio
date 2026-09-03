@@ -1,8 +1,11 @@
 ---
-import Base from '../layouts/Base.astro';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
-<Base title="Craige — Data & ML Engineering">
-  <h1 class="text-4xl font-bold tracking-tight">Hi, I'm Craige.</h1>
-  <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Data engineering, MLOps, AI governance.</p>
-  <a href="/projects" class="mt-8 inline-block rounded bg-brand px-4 py-2 text-white">See projects →</a>
-</Base>
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
