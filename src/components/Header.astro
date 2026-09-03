@@ -1,0 +1,16 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+];
+---
+<header class="border-b border-gray-200 dark:border-gray-800">
+  <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
+    <a href="/" class="font-semibold">ZEE</a>
+    <ul class="flex gap-6 text-sm">
+      {links.map((l) => (
+        <li><a href={l.href} class="hover:text-brand">{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>
